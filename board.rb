@@ -3,32 +3,55 @@ class Node
     @status = :EMPTY
     @position = position
   end
+  
+  attr_reader :status,:position
 
   def print_node
     print "{#{@status},#{@position}}"
   end
 
-  attr_accessor :status,:position
+  def place_computer
+    @status = :COMPUTER
+  end
+
+  def place_player
+    @status = :PLAYER
+  end
+
+  def empty_node
+    @status = :EMPTY
+  end
 end
 
 
 class Board
   def initialize
-    #slightly complex below - just inits a 3X3 matrix with positions 1-9
-    #like this:
-    #1,2,3
-    #4,5,6
-    #7,6,9
-    #@board = Array.new(3) { |i| Array.new(3){ |j| Node.new((i*3)+(j+1)) } }
     @board = Array.new(9) { |i| Node.new(i+1) }
+  end
+
+  #Note: I'm not going to check if these are legal moves here
+  #since I'll be the sole caller to these functions. Just no point.
+  def place_player(position)
+    @board[position].place_player(position) 
+  end
+
+  def place_computer(position)
+    @board[position].place_computer(position) 
+  end
+
+  def move_chip(position_from, position_to)
+    status = @board[position_from]
+    @board[position_from].empty_node
+    @board[position_to].place_computer if status == :COMPUTER
+    @board[position_to].place_player if status == :PLAYER
   end
 
   def print_board
     i = 1
     @board.each do |node|
-        node.print_node
-        puts "\n" if i % 3 == 0
-        i = i + 1
+      node.print_node
+      puts "\n" if i % 3 == 0
+      i = i + 1
     end
   end
 
