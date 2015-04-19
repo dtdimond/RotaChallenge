@@ -29,10 +29,10 @@ class Node
     2 => [1,3,5],
     3 => [2,5,6],
     4 => [1,5,7],
-    5 => [1,2,3,4,6,7,8,9]
-    6 => [3,5,9]
-    7 => [4,5,8]
-    8 => [5,7,9]
+    5 => [1,2,3,4,6,7,8,9],
+    6 => [3,5,9],
+    7 => [4,5,8],
+    8 => [5,7,9],
     9 => [5,6,8]
   }
 end
@@ -50,11 +50,11 @@ class Board
     i = 1
     board_state.split("").each do |char|
       if char == 'c'
-        self.place_computer(i)
+        place_computer(i)
       elsif char == 'p'
-        self.place_player(i)
+        place_player(i)
       else
-        self.empty_node(i)
+        empty_node(i)
       end
       i = i + 1
     end
